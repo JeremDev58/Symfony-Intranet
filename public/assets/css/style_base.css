@@ -1,0 +1,11 @@
+.logo img {
+  width: 75%;
+  margin-left: 1.5rem;
+}
+
+.menugauche a {
+    color: #696969;
+}
+.menugauche a:hover {
+  color: #315874;
+}

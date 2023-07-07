@@ -1,0 +1,10 @@
+#projets ul.nav {
+	line-height: 35px;
+}
+#projets li.nav-item {
+	font-size: 18px;
+}
+
+#projets #nouveau_projet {
+	margin-right:20px;
+}
