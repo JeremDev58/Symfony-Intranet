@@ -1,0 +1,37 @@
+{% macro modal(id='mod', type = 'danger', texte='Êtes-vous sûr de vouloir supprimer cet élément ?', target = 'index') %}
+
+
+{% set icon = 'mdi mdi mdi-check' %}
+{% if type == "danger" %}
+	{% set icon = 'mdi mdi-close-circle-o' %}
+{% endif %}
+{% if type == "primary" %}
+	{% set icon = 'mdi mdi mdi-info-outline' %}
+{% endif %}
+{% if type == "warning" %}
+	{% set icon = 'mdi mdi-alert-triangle' %}
+{% endif %}
+
+
+<div class="modal fade" id="{{ id }}" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          	<div class="modal-header">
+				<button class="close" type="button" data-dismiss="modal" aria-hidden="true"><span class="mdi mdi-close"></span></button>
+          	</div>
+          	<div class="modal-body">
+            	<div class="text-center">
+                  <div class="text-{{ type }}"><span class="modal-main-icon {{ icon }}"></span></div>
+                  <br />
+                  <p>{{ texte }}</p>
+                  <div class="mt-8">
+                    <button class="btn btn-space btn-secondary" type="button" data-dismiss="modal">Retour</button>
+                    <a href="/" class="btn btn-space btn-{{ type }}" id="lien_modal">Confirmer</a>
+                  </div>
+          		</div>
+          </div>
+          <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+{% endmacro %}

@@ -1,0 +1,52 @@
+{# Nom #}
+{% if data.nom %}
+<b>Nom :</b> {{ data.nom }} <br />
+{% endif %}
+
+{# Prénom #}
+{% if data.prenom %}
+<b>Prénom :</b> {{ data.prenom }} <br />
+{% endif %}
+
+{# Adresse #}
+{% if data.adresse %}
+<b>Adresse :</b> {{ data.adresse }} {{ data.adresse2 }} <br />
+{% endif %}
+
+{# Code postal #}
+{% if data.cp %}
+<b>Code postal :</b> {{ data.cp }} <br />
+{% endif %}
+
+{# Ville #}
+{% if data.ville %}
+<b>Ville :</b> {{ data.ville }} <br />
+{% endif %}
+
+{# Pays #}
+{% if data.pays %}
+<b>Pays :</b> {{ data.pays }} <br />
+{% endif %}
+
+{# Téléphone #}
+{% if data.tel %}
+<b>Téléphone :</b> {{ data.tel }} <br />
+{% endif %}
+
+{# Fax #}
+{% if data.fax %}
+<b>Fax :</b> {{ data.fax }} <br />
+{% endif %}
+
+
+{# Email #}
+{% if data.email %}
+<b>Email :</b> {{ data.email }} <br />
+{% endif %}
+
+
+{# Demande #}
+{% if data.demande %}
+<b>Demande :</b> <br /> {{ data.demande }} <br />
+{% endif %}
+

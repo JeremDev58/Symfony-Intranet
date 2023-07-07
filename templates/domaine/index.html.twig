@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Clients -
+{% endblock %}
+
+{% block titre_page %}
+	Ajout domaine
+{% endblock %}
+
+{% block body %}
+
+	{{ form_start(form) }}
+
+	{{ form_row(form._token) }}
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card card-border-color card-border-color-primary">
+				<div class="card-header card-header-divider">
+					Ajouter un domaine
+				</div>
+				<div class="card-body">
+					{{ form_row(form.titre) }}
+					{{ form_row(form.php) }}
+					{{ form_row(form.domaineLocale) }}
+					{{ form_row(form.vhost) }}
+				</div>
+			</div>
+
+			{{ form_row(form.enregistrer) }}
+		</div>
+	</div>
+
+	{{ form_end(form) }}
+
+{% endblock %}

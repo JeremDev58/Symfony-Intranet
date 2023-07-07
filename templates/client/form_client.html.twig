@@ -1,0 +1,36 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{{ form_start(form) }}
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card card-border-color card-border-color-primary">
+	        		<div class="card-header card-header-divider">
+	            		Informations sur la société
+	            	</div>
+				<div class="card-body">
+					<div class="row">						
+						<div class="col-md-6">
+							{{ form_row(form.categorie) }}
+							{{ form_row(form.titre) }}
+						</div>
+						<div class="col-md-6">
+							{{ form_row(form.siret) }}
+							{{ form_row(form.adresse) }}
+						</div>
+					</div>
+        <div class="row justify-content-end">
+		<div class="col-auto">
+			{{ form_row(form.enregistrer) }}
+		</div>
+				</div>
+        		</div>
+		</div>
+	</div>
+	</div>
+
+{{ form_end(form) }}
+
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Clients - {% endblock %}
+
+{% block titre_page %}
+	{% if modif is defined %}
+		Créer
+	{% else %}
+		Ajouter
+	{% endif %}
+un projet pour {{ client.titre }}
+{% endblock %}
+
+{% block body %}
+
+{{ form_start(form) }}
+    {{ form_row(form._token) }}
+		<div class="card card-border-color card-border-color-primary p-2">
+		    	<div class="card-header card-header-divider">
+				<div class="row justify-content-between align-content-center">
+					<h4>Informations du projet</h4>
+					{{ form_row(form.enregistrer) }}
+				</div>
+		    	</div>
+		    <div class="row">
+		    		<div class="col-md-6">
+		    			{{ form_row(form.titre) }}
+		    			{{ form_row(form.chemin_local) }}
+		    			{{ form_row(form.url_admin) }}
+		    			{{ form_row(form.identifiant_admin) }}
+					{{ form_row(form.mdp_admin) }}
+		    		</div>
+		    		<div class="col-md-6">
+		    			{{ form_row(form.domaine) }}
+		    			{{ form_row(form.nouveau_domaine) }}
+		    			{{ form_row(form.nom_bdd) }}
+					<div class="row align-items-center">
+	        				{{ form_label(form.hebergement) }}
+	        				<div class="col-md-9">
+	        					{{ form_widget( form.hebergement, {'attr': {'class': 'select_hebergement'}}) }}
+	        				</div>
+	        				<div class="col-md-1">
+	        					<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modal_hebergement" id="ajout_hebergement"><i class="fa fa-plus"></i></a>
+	        				</div>
+	        			</div>
+		    		</div>
+		    </div>
+	    </div>
+	    {{ form_end(form) }}
+
+	    <div class="modal fade" id="modal_hebergement" tabindex="-1" role="dialog">
+	        <div class="modal-dialog">
+	            <div class="modal-content">
+	              	<div class="modal-header">
+	    				<button class="close" type="button" data-dismiss="modal" aria-hidden="true"><span class="mdi mdi-close"></span></button>
+	              	</div>
+	              	<div class="modal-body">
+	                	<h3>Ajouter un hébergement</h3>
+	                	<p>Les autres infos peuvent être complétées un fois le client créé.</p>
+	                	<div id="form_hebergement"></div>
+	              </div>
+	              <div class="modal-footer"></div>
+	            </div>
+	        </div>
+	    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+<script src="{{ asset('/assets/js/jquery-form.js') }}"></script>
+
+
+<script>
+	$(document).ready(function(){
+		$("#ajout_hebergement").on('click', function(){
+			$.ajax({
+				url: '/ajout-hebergement/',
+				type: 'POST',
+				success: function(retour){
+					$("#form_hebergement").empty().append(retour);
+
+					$("#form_hebergement").on('submit', function(e){
+						e.preventDefault();
+
+						$form = $(e.target);
+						modal = $('#modal_hebergement');
+
+
+						$test = $form.ajaxSubmit({
+							type: 'post',
+							success: function(retour) {
+								$(".select_hebergement").append(retour);
+								modal.modal('toggle');
+							},
+							error: function(jqXHR, status, error) {
+								console.log(error);
+							}
+						});
+					});
+				}
+			})
+		});
+
+	});
+
+</script>
+
+{% endblock %}

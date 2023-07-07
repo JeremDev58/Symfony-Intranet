@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block titre_page %}
+Accueil
+{% endblock %}
+
+{% block body %}
+<div class="row">
+	<div class="col-md-6">
+		<div class="card card-border-color card-border-color-primary">
+			<div class="card-header card-header-divider">
+				<h4>Derniers clients ajoutés</h4>
+			</div>
+			<div class="card body">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Nom</th>
+							<th>Adresse</th>
+							<th>Catégorie</th>
+						</tr>
+					</thead>
+				<tbody>
+				{% for client in clients_nouveau %}
+					<tr>
+						<td><a href="{{ path('fiche_client', {'id':client.id}) }}">{{client.titre}}</a></td>
+						<td><a href="http://{{client.domaines[0]}}">{{client.domaines[0]}}</a></td>
+						<td>{{client.categorie}}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="card card-border-color card-border-color-primary">
+			<div class="card-header card-header-divider">
+				<h4>Derniers clients consultés</h4>
+			</div>
+			<div class="card body">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Nom</th>
+							<th>Adresse</th>
+							<th>Catégorie</th>
+						</tr>
+					</thead>
+				<tbody>
+				{% for client in clients_consult %}
+					<tr>
+						<td><a href="{{ path('fiche_client', {'id':client.id}) }}">{{client.titre}}</a></td>
+						<td><a href="http://{{client.domaines[0]}}">{{client.domaines[0]}}</a></td>
+						<td>{{client.categorie}}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

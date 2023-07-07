@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}clients -
+{% endblock %}
+
+{% block titre_page %}
+	Fiche clients
+{% endblock %}
+
+{% block body %}
+
+	<div class="row">
+		<div class="col-md-6">
+			<div class="card card-border-color card-border-color-primary">
+				<div class="card-header card-header-divider">
+					Informations sur la société
+				</div>
+				<div class="table-responsive noSwipe">
+					<table class="table table-striped table-hover">
+						<tr>
+							<td>Secteur d'activité</td>
+							<td>cat{{ categorie }}</td>
+						</tr>
+						<tr>
+							<td>nom de la société</td>
+							<td>{{ clients.titre }}</td>
+						</tr>
+						<tr>
+							<td>N° SIRET</td>
+							<td>{{ clients.siret }}</td>
+						</tr>
+						<tr>
+							<td>Adresse</td>
+							<td>{{ clients.adresse }}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="card card-border-color card-border-color-primary">
+				<div class="card-header card-header-divider">
+					Informations sur le projet
+				</div>
+				<div class="table-responsive noSwipe">
+					<table class="table table-striped table-hover">
+						<tr>
+							<td>Nom du projet</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Hébergement</td>
+							<td>#</td>
+						</tr>
+						<tr>
+							<td>Nom de domaine</td>
+							<td>#</td>
+						</tr>
+						<tr>
+							<td>E-mail de contact</td>
+							<td>#</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card card-border-color card-border-color-primary">
+				<div class="card-header card-header-divider">
+					Informations sur le clients
+					<span class="card-subtitle">Pour passer un coup de fil, c'est mieux !</span>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="table-responsive noSwipe">
+								<table class="table table-striped table-hover">
+									<tr>
+										<td>Nom du projet</td>
+										<td>#</td>
+									</tr>
+									<tr>
+										<td>Hébergement</td>
+										<td>#</td>
+									</tr>
+									<tr>
+										<td>Nom de domaine</td>
+										<td>#</td>
+									</tr>
+								</table>
+
+							</div>
+							<div class="col-md-6"></div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endblock %}

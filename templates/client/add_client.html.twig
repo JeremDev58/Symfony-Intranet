@@ -1,0 +1,159 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Clients - {% endblock %}
+
+{% block titre_page %}
+{% if modif is defined %}
+		Modifier
+	{% else %}
+		Ajouter
+	{% endif %}
+	un client
+{% endblock %}
+
+{% block body %}
+
+
+{% set projet = form.projets[0] %}
+{% set domaine = form.domaines[0] %}
+{% set contact = form.contacts[0] %}
+
+{{ form_start(form) }}
+
+	{{ form_row(form._token) }}
+	<div class="row">
+		<div class="col-md-6">
+			<div class="card card-border-color card-border-color-primary">
+        		<div class="card-header card-header-divider">
+            		Informations sur la société
+            	</div>
+        		<div class="card-body">
+                    {{ form_row(form.categorie) }}
+        			{{ form_row(form.titre) }}
+        			{{ form_row(form.siret) }}
+	               {{ form_row(form.adresse) }}
+        		</div>
+        	</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="card card-border-color card-border-color-primary">
+        		<div class="card-header card-header-divider">
+            		Informations sur le projet
+            	</div>
+        		<div class="card-body">
+
+                    {{ form_row(projet.titre) }}
+        			<div class="row align-items-center">
+        				{{ form_label(projet.hebergement) }}
+        				<div class="col-md-9">
+        					{{ form_widget(projet.hebergement, {'attr': {'class': 'select_hebergement'}}) }}
+        				</div>
+        				<div class="col-md-1">
+        					<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modal_hebergement" id="ajout_hebergement"><i class="fa fa-plus"></i></a>
+        				</div>
+        			</div>
+
+	                {{ form_row(projet.nouveau_domaine) }}
+                	{{ form_row(contact.email) }}
+        		</div>
+        	</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card card-border-color card-border-color-primary">
+        		<div class="card-header card-header-divider">
+            		Informations sur le client
+            		<span class="card-subtitle">Pour passer un coup de fil, c'est mieux !</span>
+            	</div>
+        		<div class="card-body">
+        			<div class="row">
+        				<div class="col-md-6">
+                            {{ form_row(contact.poste) }}
+                            {{ form_row(contact.nom) }}
+                        	{{ form_row(contact.prenom) }}
+        				</div>
+        				<div class="col-md-6">
+        					{{ form_row(contact.tel) }}
+                	        {{ form_row(contact.portable) }}
+        				</div>
+        			</div>
+
+
+        		</div>
+        	</div>
+		</div>
+	</div>
+
+	<div class="row justify-content-end">
+		<div class="col-auto">
+			{{ form_row(form.enregistrer) }}
+		</div>
+	</div>
+
+
+{{ form_end(form, {'render_rest':false}) }}
+
+
+
+<div class="modal fade" id="modal_hebergement" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          	<div class="modal-header">
+				<button class="close" type="button" data-dismiss="modal" aria-hidden="true"><span class="mdi mdi-close"></span></button>
+          	</div>
+          	<div class="modal-body">
+            	<h3>Ajouter un hébergement</h3>
+            	<p>Les autres infos peuvent être complétées un fois le client créé.</p>
+            	<div id="form_hebergement"></div>
+          </div>
+          <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+	<script src="{{ asset('/assets/js/jquery-form.js') }}"></script>
+
+
+	<script>
+		$(document).ready(function(){
+			$("#ajout_hebergement").on('click', function(){
+				$.ajax({
+					url: '/ajout-hebergement/',
+					type: 'POST',
+					success: function(retour){
+						$("#form_hebergement").empty().append(retour);
+
+						$("#form_hebergement").on('submit', function(e){
+							e.preventDefault();
+
+							$form = $(e.target);
+							modal = $('#modal_hebergement');
+
+
+							$test = $form.ajaxSubmit({
+								type: 'post',
+								success: function(retour) {
+									$(".select_hebergement").append(retour);
+									modal.modal('toggle');
+								},
+								error: function(jqXHR, status, error) {
+									console.log(error);
+								}
+							});
+						});
+					}
+				})
+			});
+
+		});
+
+	</script>
+
+
+{% endblock %}

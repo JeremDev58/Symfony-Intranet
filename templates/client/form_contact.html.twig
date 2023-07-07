@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Clients - {% endblock %}
+
+{% block titre_page %}
+	{% if modif is defined %}
+		Modifier
+	{% else %}
+		Ajouter 	
+	{% endif %}
+un contact pour {{ client.titre }}
+{% endblock %}
+
+{% block body %}
+
+{{ form_start(form) }}
+    {{ form_row(form._token) }}
+	<div class="card card-border-color card-border-color-primary">
+    	<div class="card-header card-header-divider">
+    		Informations du contact
+    	</div>
+    	<div class="card-body">
+    		<div class="row">
+    			<div class="col-md-6">
+    				{{ form_row(form.nom) }}
+    				{{ form_row(form.prenom) }}
+    				{{ form_row(form.email) }}
+    			</div>
+    			<div class="col-md-6">
+    				{{ form_row(form.poste) }}
+    				{{ form_row(form.tel) }}
+    				{{ form_row(form.portable) }}
+    			
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="row justify-content-end">
+    	<div class="col-auto">
+    		{{ form_row(form.enregistrer) }}
+    	</div>
+    </div>
+    
+{{ form_end(form) }}
+	
+
+
+{% endblock %}

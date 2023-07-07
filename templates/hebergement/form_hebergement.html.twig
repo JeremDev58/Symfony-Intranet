@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hébergements - {% endblock %}
+
+{% block titre_page %}
+	{% if modif is defined %}
+		Modifier
+	{% else %}
+		Ajouter 	
+	{% endif %}
+un hébergement
+{% endblock %}
+
+{% block body %}
+
+{{ form_start(form) }}
+    {{ form_row(form._token) }}
+    <div class="card card-border-color card-border-color-primary">
+    	<div class="card-header card-header-divider">
+    		Titre de l'hébergement
+    		<span class="card-subtitle">Ce titre sera utilisé lors de la création du projet</span>
+    	</div>
+    	<div class="card-body">
+    		{{ form_row(form.titre) }}
+    		{{ form_row(form.propriete_client) }}
+    	</div>
+    </div>
+    
+    
+    <div class="card card-border-color card-border-color-primary">
+    	<div class="card-header card-header-divider">
+    		Identifiants OVH
+    	</div>
+    	<div class="card-body">
+    		<div class="card card-table">
+				<div class="card-body">
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th colspan="2" style="width=33.33%">Administration</th>
+								<th colspan="2" style="width=33.33%">Technique</th>
+								<th colspan="2" style="width=33.33%">Propriétaire</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<tr>
+								<td>{{ form_widget(form.nic_admin) }}</td>
+								<td>{{ form_widget(form.nic_admin_pwd) }}</td>
+								<td>{{ form_widget(form.nic_tech) }}</td>
+								<td>{{ form_widget(form.nic_tech_pwd) }}</td>
+								<td>{{ form_widget(form.nic_prop) }}</td>
+								<td>{{ form_widget(form.nic_prop_pwd) }}</td>
+							</tr>
+						
+						</tbody>
+					</table>		
+				</div>
+			</div>
+    	</div>
+    </div>
+    
+    
+    <div class="card card-border-color card-border-color-primary">
+    	<div class="card-header card-header-divider">
+    		FTP
+    	</div>
+    	<div class="card-body">
+    		<div class="card card-table">
+				<div class="card-body">
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>Hôte</th>
+								<th>Identifiant</th>
+								<th>Mot de passe</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<tr>
+								<td>{{ form_widget(form.ftp_adresse) }}</td>
+								<td>{{ form_widget(form.ftp_id) }}</td>
+								<td>{{ form_widget(form.ftp_pass) }}</td>
+							</tr>
+						</tbody>
+					</table>		
+				</div>
+			</div>
+    	</div>
+    </div>
+    
+    <div class="card card-border-color card-border-color-primary">
+    	<div class="card-header card-header-divider">
+    		MySql
+    	</div>
+    	<div class="card-body">
+    		<div class="card card-table">
+				<div class="card-body">
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>Adresse</th>
+								<th>Serveur</th>
+								<th>Identifiant</th>
+								<th>Mot de passe</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<tr>
+								<td>{{ form_widget(form.mysql_adresse) }}</td>
+								<td>{{ form_widget(form.mysql_serveur) }}</td>
+								<td>{{ form_widget(form.mysql_id) }}</td>
+								<td>{{ form_widget(form.mysql_pass) }}</td>
+							</tr>
+						</tbody>
+					</table>		
+				</div>
+			</div>
+    	</div>
+    </div>
+    
+    <div class="row justify-content-end">
+    	<div class="col-auto">
+    		{{ form_row(form.enregistrer) }}
+    	</div>
+    </div>
+    
+{{ form_end(form) }}
+	
+
+
+{% endblock %}

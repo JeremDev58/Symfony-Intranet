@@ -1,0 +1,300 @@
+{% extends 'base.html.twig' %}
+
+{% import '_macros/modals.html.twig' as modals %}
+
+{% block title %}Clients -
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('assets/css/client/style.css') }}"/>
+{% endblock %}
+
+{% block titre_page %}
+	{{ client.titre }}
+{% endblock %}
+
+{% block body %}
+
+	<div class="card card-border-color card-border-color-primary" id="projets">
+		<div class="tab-container">
+			<div class="row justify-content-between align-items-center">
+				<div class="col-md-10">
+					<ul class="nav nav-tabs nav-tabs-classic" role="tablist">
+						{% for projet in client.projets %}
+							{% set active = '' %}
+							{% if loop.index == 1 %}
+								{% set active = 'active' %}
+							{% endif %}
+
+							<li class="nav-item">
+								<a class="nav-link {{ active }}" href="#projet_{{ projet.id }}" data-toggle="tab" role="tab" aria-selected="true">{{ projet.titre }}</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+				<div class="col-auto">
+					<a href="{{ path('add_projet', {'id':client.id}) }}" class="btn btn-success" id="nouveau_projet">Nouveau projet</a>
+				</div>
+			</div>
+
+			<div class="tab-content">
+				{% for projet in client.projets %}
+					{% set active = '' %}
+					{% if loop.index == 1 %}
+						{% set active = 'active' %}
+					{% endif %}
+
+					<div class="tab-pane {{ active }}" id="projet_{{ projet.id }}">
+						{% if projet.hebergement.proprieteClient %}
+							<table class="table table-striped table-bordered table-hover">
+								<thead>
+									<tr>
+										<th colspan="2" style="width=33.33%">Administration</th>
+										<th colspan="2" style="width=33.33%">Technique</th>
+										<th colspan="2" style="width=33.33%">Propriétaire</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<tr>
+										<td>{{ projet.hebergement.nicAdmin }}</td>
+										<td>{{ projet.hebergement.nicAdminPwd }}</td>
+										<td>{{ projet.hebergement.nicTech }}</td>
+										<td>{{ projet.hebergement.nicTechPwd }}</td>
+										<td>{{ projet.hebergement.nicProp }}</td>
+										<td>{{ projet.hebergement.nicPropPwd }}</td>
+									</tr>
+								</tbody>
+							</table>
+						{% endif %}
+
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th colspan="3">FTP</th>
+									<th colspan="4">MySql</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<tr>
+									<td>{{ projet.hebergement.ftpAdresse }}</td>
+									<td>{{ projet.hebergement.ftpId }}</td>
+									<td>{{ projet.hebergement.ftpPass }}</td>
+
+									<td>{{ projet.hebergement.mysqlServeur }}</td>
+									<td>{{ projet.hebergement.mysqlId }}</td>
+									<td>{{ projet.hebergement.mysqlPass }}</td>
+									<td class="text-center">
+										<a href="{{ projet.hebergement.mysqlAdresse }}/index.php?pma_username={{ projet.hebergement.mysqlId }}&pma_servername={{ projet.hebergement.mysqlServeur }}" class="btn btn-primary" target="_blank">PhpMyAdmin</a>
+										<a href="{{ path('update_hebergement', {'id': projet.hebergement.id, 'id_client':client.id}) }}" class="btn btn-primary m-1">
+											<i class="fa fa-edit"></i>
+										</a>
+									</td>
+
+								</tr>
+							</tbody>
+						</table>
+
+						<div class="row">
+							<div class="col-md-6">
+								{% if projet.cheminLocal | length > 0 %}
+									<h4>Dossier local</h4>
+									<p>{{ projet.cheminLocal }}</p>
+
+									<h4>Domaine local</h4>
+									<p>
+										<a href="http://{{ projet.domaineLocal }}" target="_blank">{{ projet.domaineLocal }}</a>
+									</p>
+								{% endif %}
+								<div class="row">
+									<div class="col-md-4">
+										<h4>Adresse de domaine</h4>
+									</div>
+									<div class="col-md-2 row align-items-center justify-content-end">
+										<div class="col-auto">
+											<a href="{{ path('add_domaine', {'id':client.id}) }}" class="btn btn-primary" id="nouveau_domaine">
+												<i class="fa fa-plus"></i>
+											</a>
+										</div>
+									</div>
+								</div>
+								{% for domaine in client.domaines %}
+									<a href="http://{{ domaine.titre }}">{{ domaine.titre }}</a><br/>
+								{% endfor %}
+							</div>
+
+							<div class="col-md-6">
+								<div class="row justify-content-between">
+									<div class="col-auto">
+										<h4>Administration</h4>
+									</div>
+									<div class="col-auto">
+										<a href="http://{{ projet.domaineLocal~projet.urlAdmin }}" class="btn btn-primary" target="_blank">Admin local</a>
+										<a href="http://{{ projet.domaine~projet.urlAdmin }}" class="btn btn-primary" target="_blank">Admin en ligne</a>
+									</div>
+								</div>
+
+								<table class="table table-striped table-bordered table-hover">
+									<thead>
+										<tr>
+											<th>Identifiant</th>
+											<th>Mot de passe</th>
+										</tr>
+									</thead>
+
+									<tbody>
+										<tr>
+											<td>{{ projet.identifiantAdmin }}</td>
+											<td>{{ projet.mdpAdmin }}</td>
+										</tr>
+									</tbody>
+
+								</table>
+							</div>
+						</div>
+
+						<div class="row justify-content-end">
+							<div class="col-auto">
+								<a href="{{ path('update_projet', {'id':client.id, 'id_projet':projet.id}) }}" class="btn btn-primary">Modifier</a>
+								<a href="{{ path('delete_projet', {'id':client.id, 'id_projet':projet.id}) }}" class="btn btn-danger" data-toggle="modal" data-target="#mod-projet">Supprimer</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-7">
+			<div class="card card-border-color card-border-color-primary">
+				<div class="card-header card-header-divider">
+					<div class="row justify-content-between align-items-center">
+						<div class="col-auto">Informations client</div>
+						<div class="col-auto">
+							<a href="{{ path('update_client', {'id':client.id}) }}" class="btn btn-primary">
+								<i class="fa fa-edit"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="row align-items-end">
+						<div class="col-md-12">
+							<p>
+								<b>Catégorie :
+								</b>{{ client.categorie.titre }}</p>
+							<p>
+								<b>Nom de la société :
+								</b>{{ client.titre }}</p>
+							<p>
+								<b>Adresse :
+								</b>
+								{{ client.adresse }}</p>
+							<p>
+								<b>SIRET :
+								</b>
+								{{ client.siret }}</p>
+							<p>
+								<a class="btn btn-primary" href="https://www.google.fr/maps/dir/{{ client.adresse|replace({' ':'+'}) }}/" target="_blank">Afficher sur Google Maps</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-5">
+			<div class="card card-border-color card-border-color-primary">
+				<div class="card-header card-header-divider">
+					<div class="row justify-content-between align-items-center">
+						<div class="col-auto">Contacts</div>
+						<div class="col-auto">
+							<a href="{{ path('add_contact', {'id':client.id}) }}" class="btn btn-primary">
+								<i class="fa fa-plus"></i>
+							</a>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="tab-container">
+					<ul class="nav nav-tabs" role="tablist">
+						{% for contact in client.contacts %}
+							{% set active = '' %}
+							{% if loop.index == 1 %}
+								{% set active = 'active' %}
+							{% endif %}
+
+							<li class="nav-item">
+								<a href="#contact_{{ contact.id }}" class="nav-link {{ active }}" data-toggle="tab" role="tab">{{ contact.prenom|first|upper }}.
+									{{ contact.nom|upper }}</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+
+				<div class="tab-content">
+					{% for contact in client.contacts %}
+						{% set active = '' %}
+						{% if loop.index == 1 %}
+							{% set active = 'active' %}
+						{% endif %}
+
+						<div class="tab-pane {{ active }}" id="contact_{{ contact.id }}">
+							<div class="row justify-content-between align-items-end">
+								<div class="col-md-auto">
+									<h4>{{ contact.prenom|capitalize }}
+										{{ contact.nom|upper }}</h4>
+
+									{% if contact.tel | length > 0 %}
+										<p>
+											<b>Téléphone :
+											</b>
+											{{ contact.tel }}</p>
+									{% endif %}
+									{% if contact.portable | length > 0 %}
+										<p>
+											<b>Portable :
+											</b>
+											{{ contact.portable }}</p>
+									{% endif %}
+									{% if contact.poste | length > 0 %}
+										<p>
+											<b>Poste :
+											</b>
+											{{ contact.poste }}</p>
+									{% endif %}
+
+									<p>
+										<b>Email :
+										</b>
+										<a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+									</p>
+								</div>
+								<div class="col-md-auto">
+									<p>
+										<a href="{{ path('update_contact', {'id':client.id, 'id_contact':contact.id}) }}" class="btn btn-primary">
+											<i class="fa fa-edit"></i>
+										</a>
+									</p>
+									<p>
+										<a href="{{ path('delete_contact', {'id':client.id, 'id_contact':contact.id}) }}" class="btn btn-danger" data-toggle="modal" data-target="#mod-contact">
+											<i class="fa fa-trash"></i>
+										</a>
+									</p>
+								</div>
+							</div>
+
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{{ modals.modal('mod-contact','danger','Êtes-vous sûr de vouloir supprimer ce contact ?') }}
+	{{ modals.modal('mod-projet','danger','Êtes-vous sûr de vouloir supprimer ce projet ?') }}
+
+{% endblock %}
